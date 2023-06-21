@@ -1,11 +1,9 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
-// import {basicLightbox} from 'basiclightbox'
 
 console.log(galleryItems);
 
 const galery = document.querySelector('.gallery')
-
 const markup = galleryItems.map(({ preview, original, description }) => `<li class="gallery__item">
   <a class="gallery__link" href="${original}">
     <img
@@ -18,7 +16,6 @@ const markup = galleryItems.map(({ preview, original, description }) => `<li cla
 </li>`)
 
 galery.insertAdjacentHTML('beforeend', markup.join(''));
-
 galery.addEventListener('click', onClick);
 
 function onClick(e) {
@@ -26,12 +23,20 @@ function onClick(e) {
   if (!e.target.classList.contains("gallery__image")) { return; }
 
   const imgUrl = e.target.dataset.source;
-
    const instance = basicLightbox.create(`
     <img src="${imgUrl}" width="800" height="600">
 `)
 
-instance.show()
+  instance.show()
+  
+  window.addEventListener('keydown', keyPress);
+
+function keyPress(e) {
+    if (e.code === 'Escape') {
+      instance.close();
+      window.removeEventListener('keydown', keyPress);
+    }
+  }
 }
 
 
