@@ -1,5 +1,6 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
+// import {basicLightbox} from 'basiclightbox'
 
 console.log(galleryItems);
 
@@ -21,7 +22,16 @@ galery.insertAdjacentHTML('beforeend', markup.join(''));
 galery.addEventListener('click', onClick);
 
 function onClick(e) {
-    if (!e.target.classList.contains("gallery__image")) { return; }
+  e.preventDefault();
+  if (!e.target.classList.contains("gallery__image")) { return; }
 
-    const imgUrl = e.target.dataset.source;
+  const imgUrl = e.target.dataset.source;
+
+   const instance = basicLightbox.create(`
+    <img src="${imgUrl}" width="800" height="600">
+`)
+
+instance.show()
 }
+
+
